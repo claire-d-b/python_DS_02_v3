@@ -1,43 +1,65 @@
-from matplotlib.pyplot import legend, show, tight_layout, subplots
+from matplotlib.pyplot import legend, show, tight_layout, subplots, savefig
 from pandas import DataFrame
-from load_csv import load
 
 
-def get_values(df: DataFrame, keyword: str):
+def convert_to_int(value):
+    """ Convert a string with a suffix like 'M' (million) or 'K' (thousand) \
+    to an integer. """
+    if not value:
+        return 0
+    if isinstance(value, int):
+        return value
 
+    value = value.strip().upper()
+    if value.endswith('M'):
+        return int(float(value[:-1]) * 1000000)
+    elif value.endswith('K'):
+        return int(float(value[:-1]) * 1000)
+    elif value.endswith('B'):
+        return int(float(value[:-1]) * 1000000000)
+    else:
+        return int(float(value))
+
+
+def get_values(df: DataFrame, keyword: str) -> list:
+
+    """Search for a keyword in the entire DataFrame"""
+    nlist = []
     try:
-        assert isinstance(df, DataFrame), "Error"
-        """ Search for a keyword in the entire DataFrame """
-        nlist = df.iloc[0].tolist()
-        ret = []
-        for item in nlist:
-            ret.append(str(item).strip())
+        isinstance(df, DataFrame)
+        index = 2050 - 1800
 
-        vlist = []
+        values = df.loc[:, int(convert_to_int(keyword) - 1800 + 1)]
 
-        row_data = df[keyword]
-
-        data = row_data
-
-        for d in data:
-            vlist.append(d)
-
-        return (vlist)
-    except AssertionError as e:
-        print(f"An unexpected error occurred: {e}")
+    except Exception as e:
+        raise AssertionError(f"Error: {e}")
+    
+    print("nlist", values[1:])
+    return list(values[1:])
 
 
-def display_points(frame_x: DataFrame, frame_y: DataFrame) -> None:
+def display(frame_x: DataFrame, frame_y: DataFrame) -> None:
 
     list_x = get_values(frame_x, '1900')
     list_y = get_values(frame_y, '1900')
+
+    nlist_x = []
+    nlist_y = []
+    for i, x in enumerate(list_x):
+        nlist_x.insert(i, convert_to_int(x))
+    for j, y in enumerate(list_y):
+        nlist_y.insert(j, convert_to_int(y))
+
+    print("list_y", nlist_y)
+    print("list_x", nlist_x)
 
     """ Custom positions and labels for the x-axis """
     x_positions = [300, 1000, 10000]
     x_labels = ['300', '1k', '10k']
 
     fig, ax = subplots()
-    ax.scatter(list_y, list_x)
+
+    ax.scatter(nlist_y, nlist_x)
 
     """ Set the x-axis to logarithmic scale """
     ax.set_xscale('log')
@@ -45,6 +67,10 @@ def display_points(frame_x: DataFrame, frame_y: DataFrame) -> None:
     """ Set custom ticks and labels for the x-axis """
     ax.set_xticks(x_positions)
     ax.set_xticklabels(x_labels)
+    ax.set_xlim(300, 11000)
+
+    ax.set_yticks(range(20, 56, 5))
+    ax.set_ylim(19, 56)
 
     """ Customize the plot """
     ax.set_title("1900")
@@ -52,25 +78,5 @@ def display_points(frame_x: DataFrame, frame_y: DataFrame) -> None:
     ax.set_ylabel("Life Expectancy")
 
     """ Display the plot """
-    legend()
     tight_layout()
-    show()
-
-
-def main():
-    try:
-        frame_x = load("src/life_expectancy_years.csv")
-        frame_y = load("src/\
-        income_per_person_gdppercapita_ppp_inflation_adjusted.csv")
-        display_points(frame_x, frame_y)
-        frame_y = load("\
-        income_per_person_gdppercapita_ppp_inflation_adjusted.csv")
-        display_points(frame_x, frame_y)
-    except TypeError as e:
-        print(f"TypeError: {e}")
-    except ValueError as e:
-        print(f"ValueError: {e}")
-
-
-if __name__ == "__main__":
-    main()
+    savefig('output', dpi=100)

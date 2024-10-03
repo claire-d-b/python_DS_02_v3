@@ -18,15 +18,14 @@ def convert_to_int(value):
     elif value.endswith('B'):
         return int(float(value[:-1]) * 1000000000)
     else:
-        return int(value)
+        return int(float(value))
 
 
-def get_line(df: DataFrame, keyword: str):
+def get_line(df: DataFrame, keyword: str) -> tuple:
     """Search for a keyword in the entire DataFrame"""
     try:
         isinstance(df, DataFrame)
         # Search for a keyword in the entire DataFrame
-        ret = []
 
         # lambda function sets all char to lowercase do we talk about case-insensititvity
         # then it searches for the keyword in all lowercase words
@@ -62,48 +61,9 @@ def get_line(df: DataFrame, keyword: str):
             if i != len(flat_cols):
                 klist.insert(i, float(convert_to_int(col)))
 
-        # isinstance(df, DataFrame)
-        # nlist = df.iloc[0].tolist()
-        # ret = []
+    except Exception as e:
+        raise AssertionError(f"Error: {e}")
 
-        # for item in nlist:
-        #     ret.append(str(item).strip())
-
-        # data = df[df.map(lambda x: keyword.lower() in
-        #                  str(x).lower()).any(axis=1)]
-
-        # width, height = data.shape
-
-        # vlist = []
-        # klist = []
-
-        # row_data = data.iloc[0]
-
-        # keys = row_data.index
-        # klist = keys.tolist()
-
-        # for y in range(height):
-        #     for x in range(width):
-        #         vlist.append(data.iloc[x].iloc[y])
-
-        # x = klist
-        # y = vlist
-
-        # nklist = []
-        # klist = klist[1:len(klist)]
-        # for k in klist:
-        #     nklist.append(int(k))
-
-        # nvlist = []
-        # vlist = vlist[1:len(vlist)]
-        # for v in vlist:
-        #     nvlist.append(convert_to_int(v))
-
-        # return (nklist, nvlist)
-
-    except AssertionError as e:
-        print(f"An unexpected error occurred: {e}")
-    # print("tuple", (klist, vlist))
     return (klist, vlist)
 
 

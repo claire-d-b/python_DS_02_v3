@@ -1,4 +1,4 @@
-from aff_pop import display
+from projection_life import display
 import sys
 import os
 # print(os.getcwd())  # This will print your current working directory
@@ -9,7 +9,7 @@ sys.path.append(parent_dir)
 from ex00 import load  # Using relative import
 
 def main():
-    display(load("../population_total.csv"), "Belgium", "France")
+    display(load("../life_expectancy_years.csv"), load("../income_per_person_gdppercapita_ppp_inflation_adjusted.csv"))
 
 
 if __name__ == "__main__":
@@ -17,5 +17,3 @@ if __name__ == "__main__":
         main()
     except AssertionError as e:
         print(f"AssertionError: {e}")
-
-
