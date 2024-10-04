@@ -1,15 +1,10 @@
 from aff_pop import display
-import sys
-import os
-# print(os.getcwd())  # This will print your current working directory
-# Get the path to the parent directory (project_directory)
+from load_csv import load
 
-parent_dir = os.path.abspath(os.path.join(os.path.dirname(__file__), '..'))
-sys.path.append(parent_dir)
-from ex00 import load  # Using relative import
 
 def main():
     display(load("../population_total.csv"), "Belgium", "France")
+    # print(load("../population_total.csv"))
 
 
 if __name__ == "__main__":
@@ -17,5 +12,3 @@ if __name__ == "__main__":
         main()
     except AssertionError as e:
         print(f"AssertionError: {e}")
-
-

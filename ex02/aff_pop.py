@@ -1,4 +1,5 @@
-from matplotlib.pyplot import figure, plot, xlim, xticks, yticks, title, xlabel, ylabel, legend, show, tight_layout, savefig
+from matplotlib.pyplot import figure, plot, xlim, xticks, yticks, title, \
+                              xlabel, ylabel, legend, tight_layout, savefig
 from pandas import DataFrame
 
 
@@ -27,18 +28,23 @@ def get_line(df: DataFrame, keyword: str) -> tuple:
         isinstance(df, DataFrame)
         # Search for a keyword in the entire DataFrame
 
-        # lambda function sets all char to lowercase do we talk about case-insensititvity
-        # then it searches for the keyword in all lowercase words
+        # lambda function sets all char to lowercase do we
+        # talk about case-insensititvity then it searches for the
+        # keyword in all lowercase words
         # axis=1 means "row-wise"
         # Finally, df[...] filters the rows where the condition is True.
-        # In other words, it selects the rows where the keyword was found in at least one of the columns.
+        # In other words, it selects the rows where the keyword was found
+        # in at least one of the columns.
 
-        # To reindex a boolean Series so that it matches a DataFrame's index,
-        # you can use the .reindex() method in pandas. This method adjusts the index
-        # of the boolean Series to match the DataFrame’s index, filling any
-        # missing values with False (or another value of your choice) to ensure proper alignment.
-        data_col = df[df.map(lambda x: keyword.lower() in str(x).lower()).any(axis=0).reindex(df.index, fill_value=False)]
-        data_row = df[df.map(lambda x: keyword.lower() in str(x).lower()).any(axis=1)]
+        # To reindex a boolean Series so that it matches a DataFrame's
+        # index, you can use the .reindex() method in pandas.
+        # This method adjusts the index of the boolean Series to match the
+        # DataFrame’s index, filling any missing values with False
+        # (or another value of your choice) to ensure proper alignment.
+        data_col = df[df.map(lambda x: keyword.lower() in str(x).lower())
+                      .any(axis=0).reindex(df.index, fill_value=False)]
+        data_row = df[df.map(lambda x: keyword.lower() in str(x).lower())
+                      .any(axis=1)]
 
         vlist = []
         klist = []
@@ -70,8 +76,8 @@ def get_line(df: DataFrame, keyword: str) -> tuple:
 def display(dataset: DataFrame, keyword_one: str, keyword_two: str) -> None:
     figure(figsize=(8, 5))
     x_one, y_one = get_line(dataset, keyword_one)
-    print("xone", x_one[:-50])
-    print("yone", y_one[:-50])
+    # print("xone", x_one[:-50])
+    # print("yone", y_one[:-50])
     plot(x_one[:-50], y_one[:-50], label=keyword_one)
     x_two, y_two = get_line(dataset, keyword_two)
     plot(x_two[:-50], y_two[:-50], color='green', label=keyword_two)

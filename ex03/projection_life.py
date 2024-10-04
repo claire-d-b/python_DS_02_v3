@@ -1,4 +1,4 @@
-from matplotlib.pyplot import legend, show, tight_layout, subplots, savefig
+from matplotlib.pyplot import tight_layout, subplots, savefig
 from pandas import DataFrame
 
 
@@ -24,17 +24,16 @@ def convert_to_int(value):
 def get_values(df: DataFrame, keyword: str) -> list:
 
     """Search for a keyword in the entire DataFrame"""
-    nlist = []
     try:
         isinstance(df, DataFrame)
-        index = 2050 - 1800
 
+        # df.loc[:, index] means select all rows. index means select
+        # the columns labeled as index.
         values = df.loc[:, int(convert_to_int(keyword) - 1800 + 1)]
 
     except Exception as e:
         raise AssertionError(f"Error: {e}")
-    
-    print("nlist", values[1:])
+    # print("values", values[1:])
     return list(values[1:])
 
 
@@ -50,10 +49,10 @@ def display(frame_x: DataFrame, frame_y: DataFrame) -> None:
     for j, y in enumerate(list_y):
         nlist_y.insert(j, convert_to_int(y))
 
-    print("list_y", nlist_y)
-    print("list_x", nlist_x)
+    # print("list_y", nlist_y)
+    # print("list_x", nlist_x)
 
-    """ Custom positions and labels for the x-axis """
+    # Custom positions and labels for the x-axis
     x_positions = [300, 1000, 10000]
     x_labels = ['300', '1k', '10k']
 
@@ -61,10 +60,10 @@ def display(frame_x: DataFrame, frame_y: DataFrame) -> None:
 
     ax.scatter(nlist_y, nlist_x)
 
-    """ Set the x-axis to logarithmic scale """
+    # Set the x-axis to logarithmic scale
     ax.set_xscale('log')
 
-    """ Set custom ticks and labels for the x-axis """
+    # Set custom ticks and labels for the x-axis
     ax.set_xticks(x_positions)
     ax.set_xticklabels(x_labels)
     ax.set_xlim(300, 11000)
@@ -72,11 +71,11 @@ def display(frame_x: DataFrame, frame_y: DataFrame) -> None:
     ax.set_yticks(range(20, 56, 5))
     ax.set_ylim(19, 56)
 
-    """ Customize the plot """
+    # Customize the plot
     ax.set_title("1900")
     ax.set_xlabel("Gross Domestic product")
     ax.set_ylabel("Life Expectancy")
 
-    """ Display the plot """
+    # Display the plot
     tight_layout()
     savefig('output', dpi=100)

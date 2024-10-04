@@ -1,9 +1,9 @@
-from load_csv import load
+from load_csv import load  # Using relative import
+
 
 
 def main():
     print(load("../life_expectancy_years.csv"))
-    display(df, num_rows, num_cols)
     print(load("Wrong path"))
 
 

@@ -12,6 +12,14 @@ pip install pandas
 pip install matplotlib
 pip install torch torchvision
 
+pip3 install setuptools wheel
+
+pip install build
+python3 -m build
+
+pip install ./dist/load_csv-0.0.1.tar.gz
+pip install ./dist/load_csv-0.0.1-py3-none-any.whl
+
 pip install flake8
 alias norminette=flake8
 
