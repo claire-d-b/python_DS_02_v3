@@ -5,6 +5,7 @@ from torch.utils.data import Dataset
 
 
 def display(df: DataFrame) -> Dataset:
+    """Use matplotlib and dataframe data to display a figure with x and y values"""
     try:
         isinstance(df, DataFrame)
         # Search for a keyword in the entire DataFrame

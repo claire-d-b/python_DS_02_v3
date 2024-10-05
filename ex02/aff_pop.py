@@ -4,8 +4,8 @@ from pandas import DataFrame
 
 
 def convert_to_int(value):
-    """ Convert a string with a suffix like 'M' (million) or 'K' (thousand) \
-    to an integer. """
+    """Convert a string with a suffix like 'M' (million) or 'K' (thousand)
+    to an integer"""
     if not value:
         return 0
     if isinstance(value, int):
@@ -23,7 +23,8 @@ def convert_to_int(value):
 
 
 def get_line(df: DataFrame, keyword: str) -> tuple:
-    """Search for a keyword in the entire DataFrame"""
+    """Search for two keyword in the entire DataFrame, then compare
+    the two keywords (countries) data"""
     try:
         isinstance(df, DataFrame)
         # Search for a keyword in the entire DataFrame
@@ -74,6 +75,7 @@ def get_line(df: DataFrame, keyword: str) -> tuple:
 
 
 def display(dataset: DataFrame, keyword_one: str, keyword_two: str) -> None:
+    """Display custom figure"""
     figure(figsize=(8, 5))
     x_one, y_one = get_line(dataset, keyword_one)
     # print("xone", x_one[:-50])

@@ -3,8 +3,8 @@ from pandas import DataFrame
 
 
 def convert_to_int(value):
-    """ Convert a string with a suffix like 'M' (million) or 'K' (thousand) \
-    to an integer. """
+    """Convert a string with a suffix like 'M' (million) or 'K' (thousand) \
+    to an integer"""
     if not value:
         return 0
     if isinstance(value, int):
@@ -22,8 +22,7 @@ def convert_to_int(value):
 
 
 def get_values(df: DataFrame, keyword: str) -> list:
-
-    """Search for a keyword in the entire DataFrame"""
+    """Search for spcific columns in the entire DataFrame"""
     try:
         isinstance(df, DataFrame)
 
@@ -38,7 +37,7 @@ def get_values(df: DataFrame, keyword: str) -> list:
 
 
 def display(frame_x: DataFrame, frame_y: DataFrame) -> None:
-
+    """Display scatter plot with points standing for countries' x / y values"""
     list_x = get_values(frame_x, '1900')
     list_y = get_values(frame_y, '1900')
 

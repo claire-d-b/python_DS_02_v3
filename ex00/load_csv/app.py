@@ -3,6 +3,7 @@ from torch.utils.data import Dataset
 
 
 def show_dataset(df: DataFrame, num_rows: int, num_cols: int) -> Dataset:
+    """Truncate data structure and unveil specific columns"""
     try:
         isinstance(df, DataFrame)
         size = (num_rows, num_cols)
